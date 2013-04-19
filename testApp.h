@@ -6,7 +6,7 @@
 
 class testApp : public ofBaseApp{
 
-  public:
+	public:
 		void setup();
 		void update();
 		void draw();
@@ -28,9 +28,6 @@ class testApp : public ofBaseApp{
         vector<ofFbo*> fbos;
     
         ofxBlur blur;
-    
-        float lastTime;
-        float duration;
     
         ofImage alert;
     
@@ -56,6 +53,7 @@ private:
     int threshold;
     int openThreshold;
     
-
-    
-};
+    float startTime;
+    float currentTime;
+    float totalTime;
+    bool flip;
