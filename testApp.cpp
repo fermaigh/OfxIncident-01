@@ -103,8 +103,8 @@ void testApp::update(){
             }
            
             if (currentTime - startTime < totalTime){
-                blur.setScale(ofMap(attention, 0.0, attention, 4, 1));
-                blur.setRotation(ofMap(attention, 0, attention, -PI, PI));
+                blur.setScale(ofMap(attention, 0.0, 100.0, 4, 1));
+                blur.setRotation(ofMap(attention, 0, 100.0, -PI, PI));
                 cout<<"current time:"<<endl;
                 cout<<currentTime<<endl;
                 cout<<"start time:"<<endl;
