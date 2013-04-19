@@ -5,7 +5,7 @@ void testApp::setup(){
     
     
     welcomescreen.loadMovie("movies/welcome.mov");
-  welcomescreen.play();
+    welcomescreen.play();
     
     blur.setup(welcomescreen.getWidth(), welcomescreen.getHeight(), 4, .2, 4);  
     gameplay.loadMovie("movies/gameplay.mov");
@@ -27,8 +27,13 @@ void testApp::setup(){
     extreme = false;
     incident = false;
     
+    startTime = 0;
+    currentTime = 0;
+    totalTime = 5;
+    flip = true;
+    
     counter= 1;
-    threshold = 30;
+    threshold = 60;
     openThreshold = 63;
     
 }
@@ -38,7 +43,7 @@ void testApp::update(){
     
     thinkGear.update();
     
-    welcomescreen.update();
+    //welcomescreen.update();
     blur.setScale(ofMap(attention, 0.0, 100.0, 4, 1));
     blur.setRotation(ofMap(attention, 0, 100.0, -PI, PI));
     
@@ -63,21 +68,19 @@ void testApp::update(){
             welcomescreen.close();
         }
     }
-    
-    
-    
-    
+
     if (gameover.getPosition() > 0.9){
         lastPlaySeq = true;
     }
     
     if (lastPlaySeq == false) {
         gameover.update();
-    } else {
+    }
+    else {
         welcomescreen.update();
         firstPlaySeq = false;
     }
-    
+
     if (incident == true){
         gameplay.update();
     
@@ -87,30 +90,34 @@ void testApp::update(){
         else {
             danger = false;
             extreme = false;
+            flip = true;
         }
 
         if(danger == true && welcome == false){
-            float diff = ofGetElapsedTimef() - lastTime;
-                lastTime = ofGetElapsedTimef();
-                counter++;
-                extreme = true;
             
-            if (diff < 5000 && attention < threshold){
+            currentTime = ofGetElapsedTimef();
+            
+            if (flip == true){
+                startTime = ofGetElapsedTimef();
+                flip = false;
+            }
+           
+            if (currentTime - startTime < totalTime){
                 blur.setScale(ofMap(attention, 0.0, counter, 4, 1));
                 blur.setRotation(ofMap(attention, 0, counter, -PI, PI));
-                cout<<"attetnion is low and less than 5 sec"<<endl;
-                cout<<diff;
+                cout<<"current time:"<<endl;
+                cout<<currentTime<<endl;
+                cout<<"start time:"<<endl;
+                cout<<startTime<<endl;
                 extreme = true;
-            }
-            
-            if (diff > 5000 && attention < threshold){
+            } 
+            else {
                 gameplay.close();
                 gameover.update();
                 over = true;
                 cout<<"over"<<endl;
-                }
+            }
         }
-    
     }
     
 
