@@ -33,7 +33,7 @@ void testApp::setup(){
     flip = true;
     
     counter= 1;
-    threshold = 60;
+    threshold = 70;
     openThreshold = 63;
     
 }
